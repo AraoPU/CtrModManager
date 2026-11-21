@@ -10,7 +10,8 @@ CtrModManager 会把每个 Mod 配置（Profile）完整保存在应用数据目
 
 
 <!--
-界面截图建议放到 docs/screenshots/ 后在此展示：
+界面截图：把图片放到 docs/screenshots/ 下，取消下方注释即可生效。
+建议 1280×800（或等比例）PNG，单张控制在 500 KB 内；首图用深色主题辨识度更高。
 
 ![主页](docs/screenshots/home.png)
 ![已安装模组](docs/screenshots/mods.png)
@@ -62,10 +63,22 @@ CtrModManager 会把每个 Mod 配置（Profile）完整保存在应用数据目
 5. 点击「以 Mod 启动」开始游戏，或点击「启动原版」干净启动。
 6. 在「设置 → 配置」中可将当前配置导出为 `.r2z`，用于备份或分享。
 
+> **首次安装会被 SmartScreen 拦截。** 当前安装包没有代码签名，Windows 会提示「未知发布者」。点「更多信息 → 仍要运行」即可；下载后建议先按下方「验证安装包」核对 SHA256。
+
+### 验证安装包
+
+每个 Release 的说明里会给出安装包的 SHA256。下载后可在 PowerShell 中核对：
+
+```powershell
+Get-FileHash .\CtrModManager-Setup-0.1.0.exe -Algorithm SHA256
+```
+
+输出与 Release 说明中的哈希一致，才说明文件在传输过程中没有被替换。
+
 ## 本地开发
 
 ```bash
-git clone https://github.com/<your-username>/CtrModManager.git
+git clone https://github.com/AraoPU/CtrModManager.git
 cd CtrModManager
 npm install
 npm start
@@ -76,7 +89,7 @@ npm start
 ```bash
 npm run pack          # 生成未打包目录 release/win-unpacked
 npm run dist          # 生成 NSIS 安装包 release/CtrModManager-Setup-<version>.exe
-npm run dist:portable # 生成便携版
+npm run dist:portable # 生成便携版 release/CtrModManager-Portable-<version>.exe
 ```
 
 `package.json` 中配置了 Electron / electron-builder 的国内镜像（npmmirror）。如果在其他网络环境下构建缓慢或失败，可删除 `config.electron_builder_binaries_mirror` 或替换为合适的镜像。
@@ -101,6 +114,9 @@ src/
 │  └─ store.js           设置与本地缓存
 ├─ preload/preload.js    contextBridge IPC 白名单
 └─ renderer/             原生 HTML / CSS / JS 界面
+   ├─ index.html         窗口骨架、CSP、标题栏
+   ├─ app.js             视图渲染与交互（单文件，按功能分区注释）
+   └─ styles.css         主题变量与全部样式
 ```
 
 ## 数据存放
@@ -130,6 +146,21 @@ src/
 - [adm-zip](https://www.npmjs.com/package/adm-zip) 解压，[js-yaml](https://www.npmjs.com/package/js-yaml) 读写 `mods.yml` 与 `export.r2x`
 - 主进程负责所有文件与网络操作；渲染进程开启 `contextIsolation` 与 `sandbox`，仅通过 preload 暴露的白名单 IPC 通信
 - 页面启用 CSP，外部链接统一交给系统浏览器打开
+
+## 安全性说明
+
+一个 Mod 管理器要往你的游戏目录里写文件，所以它必须对得起这份权限。目前已做的防护：
+
+- **渲染进程完全沙箱化**：`sandbox` 与 `contextIsolation` 开启、`nodeIntegration` 关闭，界面代码无法直接访问文件系统
+- **IPC 白名单**：所有主进程能力都必须在 `preload.js` 中显式声明，参数在主进程侧校验
+- **路径校验**：来自界面的相对路径统一归一化，拒绝 `..`、绝对路径与盘符，并二次确认解析结果仍在配置目录内
+- **CSP 与导航锁定**：页面禁止跳转与开新窗口，`http` / `https` 以外的链接一律拒绝；Mod 图标的 CDN 域名单独放行
+- **解压保护**：限制单个包的条目数与解压总量，解压失败会回滚已写入的文件
+- **游戏目录可追溯**：注入到游戏目录的加载器文件都有清单记录，切换配置或原版启动时自动清理
+
+**已知限制**：当前版本下载 Mod 后只校验 ZIP 结构是否完整，**没有做哈希比对**，安全性依赖 Thunderstore 的 HTTPS 通道。如果上游包本身被篡改，本工具发现不了。计划在后续版本补上完整性校验；在那之前，请只安装来自可信作者的 Mod。
+
+发现安全问题请通过 Issues 或私下联系作者，先不要公开披露细节。
 
 ## 兼容性说明
 
