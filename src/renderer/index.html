@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data: https://ccdn.thunderstore.io https://gcdn.thunderstore.io; font-src 'self'">
+  <title>CtrModManager</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="app">
+    <header class="titlebar">
+      <div class="titlebar-left">
+        <button id="home-tab" class="brand-tab" type="button" title="主页">
+          <img class="brand-mark" src="../../build/icon.png" alt="" aria-hidden="true" draggable="false">
+          <span class="brand-name">CtrModManager</span>
+        </button>
+        <div id="tab-strip" class="tab-strip" role="tablist" aria-label="已打开的游戏"></div>
+      </div>
+      <div class="titlebar-drag-zone"></div>
+      <div class="titlebar-controls">
+        <button id="btn-downloads" class="win-btn win-btn-downloads" type="button" aria-label="下载" title="下载">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v10"/><path d="M8 10.5l4 4 4-4"/><path d="M5 19h14"/></svg>
+          <span id="downloads-badge" class="win-badge is-hidden">0</span>
+          <span id="downloads-progress" class="win-progress is-hidden" aria-hidden="true">
+            <span id="downloads-progress-fill" class="win-progress-fill"></span>
+          </span>
+        </button>
+        <button id="btn-settings" class="win-btn win-btn-settings" type="button" aria-label="设置" title="设置">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1-1.5 1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.9.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.9-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.9V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>
+        </button>
+        <button id="btn-min" class="win-btn" type="button" aria-label="最小化" title="最小化">
+          <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.1"><path d="M2 6h8"/></svg>
+        </button>
+        <button id="btn-max" class="win-btn" type="button" aria-label="最大化" title="最大化">
+          <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.1"><rect x="2.2" y="2.2" width="7.6" height="7.6" rx="1"/></svg>
+        </button>
+        <button id="btn-close" class="win-btn win-btn-close" type="button" aria-label="关闭" title="关闭">
+          <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.1"><path d="M2.6 2.6l6.8 6.8M9.4 2.6l-6.8 6.8"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <main id="main" class="main"></main>
+    <div id="toast-root" aria-live="polite"></div>
+    <div id="modal-root"></div>
+  </div>
+
+  <script defer src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+{
+  "name": "ctr-mod-manager",
+  "productName": "CtrModManager",
+  "version": "0.1.0",
+  "description": "A clean Thunderstore mod manager for desktop.",
+  "author": "AraoPU2",
+  "private": true,
+  "main": "src/main/main.js",
+  "config": {
+    "electron_builder_binaries_mirror": "https://npmmirror.com/mirrors/electron-builder-binaries/"
+  },
+  "scripts": {
+    "start": "electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder --win nsis",
+    "dist:portable": "electron-builder --win portable"
+  },
+  "devDependencies": {
+    "electron": "^45.3.2",
+    "electron-builder": "^26.0.12"
+  },
+  "dependencies": {
+    "adm-zip": "^0.6.1",
+    "js-yaml": "^5.5.0"
+  },
+  "build": {
+    "appId": "com.ctrmodmanager.app",
+    "productName": "CtrModManager",
+    "copyright": "Copyright © 2026 Ar Studio",
+    "directories": {
+      "output": "release",
+      "buildResources": "build"
+    },
+    "electronDist": "node_modules/electron/dist",
+    "files": [
+      "src/**/*",
+      "build/icon.png",
+      "package.json",
+      "!**/*.map"
+    ],
+    "win": {
+      "icon": "build/icon.ico",
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowElevation": true,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "CtrModManager",
+      "artifactName": "CtrModManager-Setup-${version}.${ext}",
+      "deleteAppDataOnUninstall": false
+    }
+  }
+}

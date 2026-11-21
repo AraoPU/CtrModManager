@@ -1,0 +1,8 @@
+node_modules/
+dist/
+release/
+*.log
+.workbuddy/
+.trae-html-share-packages/
+.screenshots/
+BUG-REVIEW.md
