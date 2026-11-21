@@ -6,6 +6,14 @@
   "author": "AraoPU2",
   "private": true,
   "main": "src/main/main.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AraoPU/CtrModManager.git"
+  },
+  "bugs": {
+    "url": "https://github.com/AraoPU/CtrModManager/issues"
+  },
+  "homepage": "https://github.com/AraoPU/CtrModManager#readme",
   "config": {
     "electron_builder_binaries_mirror": "https://npmmirror.com/mirrors/electron-builder-binaries/"
   },
@@ -32,6 +40,10 @@
       "buildResources": "build"
     },
     "electronDist": "node_modules/electron/dist",
+    "electronLanguages": [
+      "zh-CN",
+      "en-US"
+    ],
     "files": [
       "src/**/*",
       "build/icon.png",
@@ -48,6 +60,9 @@
           ]
         }
       ]
+    },
+    "portable": {
+      "artifactName": "CtrModManager-Portable-${version}.${ext}"
     },
     "nsis": {
       "oneClick": false,
