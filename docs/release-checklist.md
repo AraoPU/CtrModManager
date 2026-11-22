@@ -47,7 +47,7 @@ sha256sum CtrModManager-Setup-*.exe CtrModManager-Portable-*.exe
 Windows 上也可以用 PowerShell：
 
 ```powershell
-Get-FileHash .\release\CtrModManager-Setup-0.1.0.exe -Algorithm SHA256
+Get-FileHash .\release\CtrModManager-Setup-1.0.0.exe -Algorithm SHA256
 ```
 
 把结果填进下面的 Release 说明。

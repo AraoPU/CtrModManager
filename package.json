@@ -1,7 +1,7 @@
 {
   "name": "ctr-mod-manager",
   "productName": "CtrModManager",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "A clean Thunderstore mod manager for desktop.",
   "author": "AraoPU2",
   "private": true,

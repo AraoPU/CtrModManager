@@ -70,7 +70,7 @@ CtrModManager 会把每个 Mod 配置（Profile）完整保存在应用数据目
 每个 Release 的说明里会给出安装包的 SHA256。下载后可在 PowerShell 中核对：
 
 ```powershell
-Get-FileHash .\CtrModManager-Setup-0.1.0.exe -Algorithm SHA256
+Get-FileHash .\CtrModManager-Setup-1.0.0.exe -Algorithm SHA256
 ```
 
 输出与 Release 说明中的哈希一致，才说明文件在传输过程中没有被替换。
