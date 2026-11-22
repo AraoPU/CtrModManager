@@ -28,7 +28,14 @@ npm run dist:portable   # 便携版单文件 exe
 | `release/CtrModManager-Setup-<version>.exe` | 安装版，推荐给大多数用户 |
 | `release/CtrModManager-Portable-<version>.exe` | 便携版，解压即用、不写注册表 |
 
-> **不要上传 `release/win-unpacked.zip`。** 它是 electron-builder 的中间目录，解压后是三千多个文件、用户找不到该点哪个 exe。它比不提供绿色版更糟。真正的绿色版用 `npm run dist:portable`。
+> **关于绿色版**：`release/win-unpacked/` 本身就是可直接运行的绿色版目录（22 个文件，`CtrModManager.exe` 在根目录，双击即用，约 312 MB）。分发有两种形式，按需选一种，不必都传：
+>
+> | 形式 | 体积 | 特点 |
+> | --- | --- | --- |
+> | 目录打成 zip | 约 151 MB | 解压即用、启动最快；但 `win-unpacked.zip` 是构建术语，用户看不出这是绿色版，建议改名 `CtrModManager-Portable-<version>.zip`，并在 Release 说明里写清「解压后运行 CtrModManager.exe」 |
+> | `npm run dist:portable` | 约 103 MB | 单文件，适合放 U 盘；每次启动会自解压到临时目录，首次启动略慢 |
+>
+> 两者都能用，差别只在「单文件 vs 免解压」和 48 MB 下载体积。
 
 ## 3. 生成哈希
 
