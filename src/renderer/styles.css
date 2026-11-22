@@ -3444,6 +3444,163 @@ html[data-theme="dark"] .nav-item.is-active .nav-progress {
   margin-top: 0;
 }
 
+/* ---------- Sponsor ---------- */
+
+.sponsor-heading {
+  font-size: 14px;
+  font-weight: 650;
+  color: var(--ink);
+}
+
+.sponsor-desc {
+  margin: 6px 0 0;
+  font-size: 12.5px;
+  line-height: 1.7;
+  color: var(--muted);
+}
+
+.sponsor-options {
+  display: grid;
+  gap: 10px;
+  margin: 18px 0 14px;
+}
+
+.sponsor-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 13px 15px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+  color: var(--ink);
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.12s ease, background 0.12s ease, transform 0.12s ease;
+}
+
+.sponsor-option:hover {
+  border-color: var(--line-strong);
+  background: var(--surface-2);
+}
+
+.sponsor-option:active {
+  transform: translateY(1px);
+}
+
+.sponsor-option-icon {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  flex: none;
+}
+
+.sponsor-option-icon .icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+.sponsor-option.is-wechat .sponsor-option-icon {
+  background: rgba(7, 193, 96, 0.13);
+  color: #07c160;
+}
+
+.sponsor-option.is-afdian .sponsor-option-icon {
+  background: rgba(139, 92, 246, 0.15);
+  color: #8b5cf6;
+}
+
+.sponsor-option-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+
+.sponsor-option-title {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.sponsor-option-desc {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.sponsor-option-arrow {
+  flex: none;
+  color: var(--muted-2);
+}
+
+.modal.sponsor-modal {
+  max-width: 452px;
+}
+
+.sponsor-notice-list {
+  display: grid;
+  gap: 8px;
+  margin: 14px 0 0;
+  padding-left: 18px;
+}
+
+.sponsor-notice-item {
+  font-size: 12.5px;
+  line-height: 1.7;
+  color: var(--muted);
+}
+
+.modal .sponsor-agree {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin: 18px 0 0;
+  padding: 11px 13px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--surface-2);
+  font-size: 12.5px;
+  font-weight: 400;
+  letter-spacing: normal;
+  text-transform: none;
+  color: var(--ink-2);
+  cursor: pointer;
+}
+
+/* 需要压过 .modal input 的 width:100% / height:40px，否则复选框会占满整行 */
+.modal .sponsor-agree-input {
+  flex: none;
+  width: 15px;
+  height: 15px;
+  margin: 0;
+  padding: 0;
+  border: 1px solid var(--line-strong);
+  border-radius: 4px;
+  background: var(--surface);
+  accent-color: var(--ink);
+  cursor: pointer;
+}
+
+.sponsor-qr {
+  margin-top: 16px;
+  text-align: center;
+}
+
+.sponsor-qr-image {
+  width: 100%;
+  max-width: 300px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #fff;
+}
+
+.sponsor-qr .sponsor-qr-hint {
+  text-align: center;
+}
+
 .radio-group {
   display: flex;
   flex-direction: column;

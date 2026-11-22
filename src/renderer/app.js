@@ -39,7 +39,11 @@
     gear: `${SVG_OPEN}<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1-1.5 1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.9.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.9-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.9V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>`,
     config: `${SVG_OPEN}<path d="M4 7h9M17 7h3M4 12h3M11 12h9M4 17h11M19 17h1"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="12" r="2"/><circle cx="17" cy="17" r="2"/></svg>`,
     grid: `${SVG_OPEN}<rect x="3.5" y="3.5" width="7" height="7" rx="1.6"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.6"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.6"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.6"/></svg>`,
-    cover: `${SVG_OPEN}<rect x="4.5" y="3.5" width="6.5" height="17" rx="1.6"/><rect x="13.5" y="3.5" width="6.5" height="17" rx="1.6"/></svg>`
+    cover: `${SVG_OPEN}<rect x="4.5" y="3.5" width="6.5" height="17" rx="1.6"/><rect x="13.5" y="3.5" width="6.5" height="17" rx="1.6"/></svg>`,
+    heart: `${SVG_OPEN}<path d="M12 20l-1.2-1.1C6.2 14.9 4 12.8 4 10.2A4.2 4.2 0 0 1 8.2 6c1.5 0 2.9.7 3.8 1.9A4.7 4.7 0 0 1 15.8 6 4.2 4.2 0 0 1 20 10.2c0 2.6-2.2 4.7-6.8 8.7z"/></svg>`,
+    wechat: `${SVG_OPEN}<path d="M9.4 4.4c-3.4 0-6.1 2.1-6.1 4.8 0 1.5.8 2.8 2.1 3.7l-.5 1.9 2.2-1.1c.5.1 1 .2 1.6.2"/><path d="M14.7 8.7c-2.9 0-5.2 1.9-5.2 4.3s2.3 4.3 5.2 4.3c.5 0 1-.1 1.5-.2l1.9 1-.4-1.7c1-.8 1.6-1.9 1.6-3.2 0-2.4-2.3-4.3-5.2-4.3z"/><circle cx="6.9" cy="8.6" r=".75" fill="currentColor" stroke="none"/><circle cx="10.6" cy="8.6" r=".75" fill="currentColor" stroke="none"/></svg>`,
+    afdian:
+      '<svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M13.6 2.5 5.7 13.3c-.3.45 0 1.05.55 1.05h4.2l-1.4 7.1c-.1.63.66 1 1.05.5l7.9-10.8c.3-.45 0-1.05-.55-1.05h-4.2l1.5-7.1c.13-.62-.63-.99-1.05-.5z"/></svg>'
   };
 
   const collator = new Intl.Collator(undefined, { numeric: true, sensitivity: 'base' });
@@ -5923,6 +5927,128 @@
     }
   }
 
+  /* ---------- Sponsor ---------- */
+
+  const SPONSOR_AFDIAN_URL = 'https://ifdian.net/a/AraoPU2';
+
+  const SPONSOR_NOTICE = [
+    '赞助是自愿的赠与行为，不构成购买任何商品或服务。',
+    '赞助不会解锁额外功能、特权或优先支持，软件功能对所有用户一致。',
+    '本项目以 MIT 协议开源，赞助不影响任何人使用、修改或分发它的权利。',
+    '赞助款不予退还，请量力而行。'
+  ];
+
+  function openSponsorNotice(kind) {
+    const isWechat = kind === 'wechat';
+    let closed = false;
+
+    const titleEl = h('h2', { class: 'sponsor-modal-title', text: '重要声明' });
+    const body = h('div', { class: 'sponsor-notice-body' });
+    const actions = h('div', { class: 'modal-actions' });
+
+    const overlay = h(
+      'div',
+      {
+        class: 'modal-overlay',
+        onmousedown: (event) => {
+          if (event.target === overlay) close();
+        }
+      },
+      h('div', { class: 'modal sponsor-modal' }, titleEl, body, actions)
+    );
+
+    const onKeyDown = (event) => {
+      if (event.key === 'Escape') close();
+    };
+
+    function close() {
+      if (closed) return;
+      closed = true;
+      document.removeEventListener('keydown', onKeyDown);
+      overlay.remove();
+    }
+
+    function renderNotice() {
+      const agree = h('input', { type: 'checkbox', class: 'sponsor-agree-input' });
+      const nextButton = h(
+        'button',
+        {
+          type: 'button',
+          class: 'btn primary',
+          disabled: true,
+          onclick: () => proceed()
+        },
+        '下一步'
+      );
+
+      agree.addEventListener('change', () => {
+        nextButton.disabled = !agree.checked;
+      });
+
+      body.replaceChildren(
+        h(
+          'ul',
+          { class: 'sponsor-notice-list' },
+          SPONSOR_NOTICE.map((text) => h('li', { class: 'sponsor-notice-item', text }))
+        ),
+        h(
+          'label',
+          { class: 'sponsor-agree' },
+          agree,
+          h('span', { text: '我已阅读并同意以上声明' })
+        )
+      );
+
+      actions.replaceChildren(
+        h('button', { type: 'button', class: 'btn', onclick: () => close() }, '取消'),
+        nextButton
+      );
+    }
+
+    function renderWechatQr() {
+      titleEl.textContent = '微信赞赏';
+      body.replaceChildren(
+        h(
+          'div',
+          { class: 'sponsor-qr' },
+          h('img', {
+            class: 'sponsor-qr-image',
+            src: 'assets/wechat-reward.png',
+            alt: '微信赞赏码',
+            draggable: 'false'
+          }),
+          h('p', {
+            class: 'sponsor-qr-hint',
+            text: '打开微信「扫一扫」，识别二维码完成赞赏。'
+          })
+        )
+      );
+      actions.replaceChildren(
+        h('button', { type: 'button', class: 'btn primary', onclick: () => close() }, '关闭')
+      );
+    }
+
+    async function proceed() {
+      // 微信是扫码，留在应用内展示二维码；爱发电需要到浏览器完成
+      if (isWechat) {
+        renderWechatQr();
+        return;
+      }
+
+      try {
+        await api.app.openExternal(SPONSOR_AFDIAN_URL);
+        close();
+        toast('已在浏览器中打开爱发电');
+      } catch (error) {
+        toast(errorText(error), true);
+      }
+    }
+
+    renderNotice();
+    els.modalRoot.append(overlay);
+    document.addEventListener('keydown', onKeyDown);
+  }
+
   /* ---------- Global settings ---------- */
 
   function openGlobalSettings() {
@@ -6303,6 +6429,48 @@
       )
     );
 
+    const sponsorOption = (iconName, title, description, toneClass, kind) =>
+      h(
+        'button',
+        {
+          type: 'button',
+          class: `sponsor-option ${toneClass}`,
+          onclick: () => openSponsorNotice(kind)
+        },
+        h('span', { class: 'sponsor-option-icon' }, icon(iconName)),
+        h(
+          'span',
+          { class: 'sponsor-option-text' },
+          h('span', { class: 'sponsor-option-title', text: title }),
+          h('span', { class: 'sponsor-option-desc', text: description })
+        ),
+        icon('chevronRight', 'icon-sm sponsor-option-arrow')
+      );
+
+    const sponsorPanel = h(
+      'div',
+      { class: 'settings-tab-panel is-hidden' },
+      h(
+        'div',
+        { class: 'sponsor-intro' },
+        h('div', { class: 'sponsor-heading', text: '支持 CtrModManager' }),
+        h('p', {
+          class: 'sponsor-desc',
+          text: '如果这个工具帮你省下了折腾 Mod 的时间，欢迎请我喝一杯。赞助完全出于自愿，不影响任何功能。'
+        })
+      ),
+      h(
+        'div',
+        { class: 'sponsor-options' },
+        sponsorOption('wechat', '微信赞赏', '使用微信扫码，金额随意', 'is-wechat', 'wechat'),
+        sponsorOption('afdian', '爱发电', '在爱发电主页持续支持', 'is-afdian', 'afdian')
+      ),
+      h('div', {
+        class: 'field-hint',
+        text: '赞助不会解锁额外功能，也不会影响后续更新。'
+      })
+    );
+
     const modalTitle = h('h2', { class: 'settings-modal-title', text: '设置' });
     const nav = h('nav', { class: 'settings-modal-nav' });
     const navButtons = new Map();
@@ -6319,20 +6487,29 @@
       h('button', { type: 'button', class: 'btn primary', onclick: () => finish(true) }, '关闭')
     );
 
+    const panels = new Map([
+      ['general', generalPanel],
+      ['about', aboutPanel],
+      ['sponsor', sponsorPanel]
+    ]);
+    const panelTitles = { general: '设置', about: '关于', sponsor: '赞助' };
+
     const switchTab = (key) => {
       for (const [name, button] of navButtons) {
         button.classList.toggle('is-active', name === key);
       }
-      generalPanel.classList.toggle('is-hidden', key !== 'general');
-      aboutPanel.classList.toggle('is-hidden', key !== 'about');
-      modalTitle.textContent = key === 'about' ? '关于' : '设置';
+      for (const [name, panel] of panels) {
+        panel.classList.toggle('is-hidden', name !== key);
+      }
+      modalTitle.textContent = panelTitles[key] || '设置';
       saveActions.classList.toggle('is-hidden', key !== 'general');
-      closeActions.classList.toggle('is-hidden', key !== 'about');
+      closeActions.classList.toggle('is-hidden', key === 'general');
     };
 
     for (const [key, label, iconName] of [
       ['general', '常规', 'gear'],
-      ['about', '关于', 'info']
+      ['about', '关于', 'info'],
+      ['sponsor', '赞助', 'heart']
     ]) {
       const button = h(
         'button',
@@ -6403,7 +6580,7 @@
         'div',
         { class: 'settings-modal-main' },
         h('aside', { class: 'settings-modal-sidebar' }, nav),
-        h('div', { class: 'settings-modal-body' }, generalPanel, aboutPanel)
+        h('div', { class: 'settings-modal-body' }, generalPanel, aboutPanel, sponsorPanel)
       ),
       h('div', { class: 'settings-modal-footer' }, saveActions, closeActions)
     );
@@ -6420,6 +6597,8 @@
     );
 
     const onKeyDown = (event) => {
+      // 上层还叠着赞助声明等子弹窗时，ESC 只关最上层，不要把设置一起关掉
+      if (els.modalRoot.lastElementChild !== overlay) return;
       if (event.key === 'Escape') finish(true);
     };
 
