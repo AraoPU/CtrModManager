@@ -97,17 +97,9 @@ Get-FileHash .\CtrModManager-Setup-X.Y.Z.exe -Algorithm SHA256
 
 ## 6. GitHub 仓库设置（一次性）
 
-**About 描述**（当前是 `A Game Mod Management Tool`，太泛，没体现差异化）：
+**About 描述**：保持 `A Game Mod Management Tool`，不展开。定位与差异化的说明放在 README 第一段，描述只做一句克制自我介绍。
 
-```text
-一个配置隔离的 Windows Mod 管理器：Mod 全部存在应用数据目录，只有「以 Mod 启动」时才向游戏目录注入加载器，Steam 直接启动仍是原版。支持 BepInEx / MelonLoader，可与 r2modman 的 .r2z 互换。
-```
-
-英文版（如需面向海外，建议用这个）：
-
-```text
-A profile-isolated Thunderstore mod manager for Windows. Mods live in app data; loader files are injected only when you launch with mods, so Steam launches stay vanilla. BepInEx / MelonLoader, .r2z interop.
-```
+> 注意：描述保持极简后，**Topics 就成了唯一的机器可读信号**。GitHub 站内搜索主要看仓库名、topics 与 README 正文；描述影响的是「人点不点进来」，不是「搜不搜得到」。所以下面这一项不要省。
 
 **Topics**（最多 20 个，直接影响站内搜索能否命中）：
 
